@@ -35,6 +35,7 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "account")
@@ -42,6 +43,7 @@ public class Account {
     Set<Transaction> transaction = new HashSet<>();
 
     @OneToMany(mappedBy = "account")
+    @JsonIgnore
     Set<MonthlyStatement> monthlyStatements = new HashSet<>();
 
 }

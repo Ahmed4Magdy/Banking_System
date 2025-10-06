@@ -23,7 +23,6 @@ public class MonthlyStatmentController {
 
 
 
-
     @PostMapping("/generate/{month}/{upToDate}")
     public MonthlyStatement generateStatementupdate(@RequestBody RequestMonthly request, @PathVariable String month, @PathVariable String upToDate) {
         LocalDate upTo = LocalDate.parse(upToDate);  //convert from string for localdate ..for use as date  deal with transactions and db

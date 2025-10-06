@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.entity.Account;
 import com.example.demo.entity.User;
+import com.example.demo.service.AccountServiceImpl;
 import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -36,10 +38,14 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-@GetMapping("/{id}")
+    @GetMapping("/{id}")
     public User getFindByUser(@PathVariable Long id) {
-       return userService.getFindByUser(id);
+        return userService.getFindByUser(id);
     }
+
+
+
+
 
 
 }

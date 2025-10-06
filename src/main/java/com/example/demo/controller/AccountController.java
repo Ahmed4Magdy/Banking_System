@@ -39,7 +39,10 @@ public class AccountController {
         return accountServiceimpl.getAllAccountDetails();
     }
 
-
+    @GetMapping("/byuser/{userId}")
+    public List<Account> getAccountsByUser(@PathVariable Long userId) {
+        return accountServiceimpl.getAccountsByUser(userId);
+    }
 
 
     @PutMapping("/modfiyaccount/{account_id}")

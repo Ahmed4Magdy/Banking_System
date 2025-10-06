@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RestController
 @RequestMapping("/transaction")
@@ -40,8 +41,16 @@ public class TransactionController {
 
 
     @DeleteMapping("/{id}")
-    public void DeleteTarnsactio(@PathVariable Long id){
-        transactionService.DeleteTarnsactio(id);
+    public void DeleteTarnsaction(@PathVariable Long id){
+        transactionService.DeleteTarnsaction(id);
     }
+
+
+    @GetMapping("/account/{accountId}")
+    public List<Transaction> getTransactionsByAccount(@PathVariable Long accountId) {
+        return transactionService.getTransactionsByAccount(accountId);
+    }
+
+
 
 }

@@ -8,10 +8,12 @@ import com.example.demo.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class TransactionService {
@@ -89,9 +91,15 @@ public class TransactionService {
     }
 
 
-    public void DeleteTarnsactio(Long id) {
+    public void DeleteTarnsaction(Long id) {
         transactionRepository.deleteById(id);
     }
+
+
+    public List<Transaction> getTransactionsByAccount(Long accountId) {
+        return transactionRepository.findByAccountId(accountId);
+    }
+
 
 
 }

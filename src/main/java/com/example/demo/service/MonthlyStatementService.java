@@ -31,8 +31,6 @@ public class MonthlyStatementService {
     }
 
 
-
-
     public MonthlyStatement generateStatement(RequestMonthly request, String month, LocalDate upToDate) {
         Account account = accountRepository.findById(request.getAccountId())
                 .orElseThrow(() -> new RuntimeException("Account not found"));
@@ -58,25 +56,50 @@ public class MonthlyStatementService {
             }
         }
 
+
+        double sumdeposit = 0.0;
+        for (Transaction t : monthlyTransactions) {
+            if (t.getType() == Transaction.Type.DEPOSIT) {
+                sumdeposit += t.getAmount();
+            }
+        }
+
+        double sumwithdraw = 0.0;
+        for (Transaction t : monthlyTransactions) {
+            if (t.getType() == Transaction.Type.WITHDRAW) {
+                sumwithdraw += t.getAmount();
+            }
+        }
+
+        double sumtransfer = 0.0;
+        for (Transaction t : monthlyTransactions) {
+            if (t.getType() == Transaction.Type.TRANSFER) {
+                sumtransfer += t.getAmount();
+            }
+        }
+
+
         double interest = 0.0;
-        if (account.getType().equals("SAVINGS")&&end.equals(ym.atEndOfMonth())) {
+        if (account.getType().equals("SAVINGS") && end.equals(ym.atEndOfMonth())) {
             interest = openingsbalance * 0.02;
 
         }
 
+
         MonthlyStatement statement = new MonthlyStatement();
         statement.setAccount(account);
         statement.setOpeningBalance(openingsbalance);
-        statement.setClosingBalance(account.getAccount_balance()+interest);
+        statement.setClosingBalance(account.getAccount_balance() + interest);
         statement.setMonth(month);
         statement.setInterestAdded(interest);
+        statement.setSumdeposit(sumdeposit);
+        statement.setSumwithdraw(sumwithdraw);
+        statement.setSumtransfer(sumtransfer);
 
         return monthlyStatementRepository.save(statement);
 
 
-
     }
-
 
 
     //بيجيب كل اكونت الكشف الحساب بتاع الشهر والسنه بتاعه

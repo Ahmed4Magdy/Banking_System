@@ -24,7 +24,9 @@ public class MonthlyStatement {
     private Double closingBalance;
     private Double interestAdded;
     private LocalDate createdAt = LocalDate.now();
-
+    private Double sumdeposit;
+    private Double sumwithdraw;
+    private Double sumtransfer;
 
     @ManyToOne
     @JoinColumn(name = "account_id")

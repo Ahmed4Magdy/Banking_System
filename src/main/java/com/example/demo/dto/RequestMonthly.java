@@ -14,9 +14,12 @@ public class RequestMonthly {
 
     private String month;
 
-    private BigDecimal openingBalance;
-    private BigDecimal closingBalance;
-    private BigDecimal interestAdded;
+    private Double openingBalance;
+    private Double closingBalance;
+    private Double interestAdded;
+    private Double sumdeposit;
+    private Double sumwithdraw;
+    private Double sumtransfer;
 
     private Long accountId;
 

@@ -16,13 +16,11 @@ public interface AccountService {
 
     List<Account> getAllAccountDetails();
 
-//    Account DepositAmount(Long account_id, Double amount);
-//
-//    Account WithdrawAmount(Long account_id, Double amount);
 
     Account updateAccount(Long account_id, Account account);
 
     void CloseAccount(Long account_id);
 
+    List<Account> getAccountsByUser(Long userId);
 
 }

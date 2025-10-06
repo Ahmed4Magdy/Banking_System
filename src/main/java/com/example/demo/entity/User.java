@@ -12,6 +12,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+
 public class User {
 
 
@@ -27,6 +28,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
 
 
     public enum Role {
