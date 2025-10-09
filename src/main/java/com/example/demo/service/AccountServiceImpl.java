@@ -1,13 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.RequestAccount;
+import com.example.demo.dto.AccountDto;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.User;
+import com.example.demo.mapper.AccountMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.UserRepository;
+import lombok.experimental.PackagePrivate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -17,41 +20,47 @@ public class AccountServiceImpl {
     @Autowired
     private UserRepository userRepository;
 
-    public Account CreatAccount(RequestAccount request) {
+    @Autowired
+    private AccountMapper accountMapper;
 
-        Account account = new Account();
-        account.setAccount_number(request.getAccount_number());
-        account.setAccount_balance(request.getAccount_balance());
-        account.setType(request.getType());
-        User user = userRepository.findById(request.getUserid()).orElseThrow(() -> new RuntimeException("not found id with " + request.getUserid()));
-        account.setUser(user);
-        return accountRepository.save(account);
+    public AccountDto CreatAccount(AccountDto dto) {
+
+        Account account = accountMapper.toEntity(dto);
+
+        account.setUser(userRepository.findById(dto.getUserId())
+                        .orElseThrow(() -> new RuntimeException("User not found"))
+        );
+//        account.setCreatedAt(LocalDate.now()); // ✅ يوم إنشاء الحساب
+        accountRepository.save(account);
+        AccountDto accountDto = accountMapper.toDto(account);
+        return accountDto;
 
     }
 
 
-    public Account getAccountDetailsWithAccountNumber(Long account_id) {
+    public AccountDto getAccountDetailsWithAccountNumber(Long account_id) {
 
         Account account = accountRepository.findById(account_id).orElseThrow(() -> new RuntimeException("Not found account with " + account_id));
-        return account;
-
+        return accountMapper.toDto(account);
     }
 
-    public List<Account> getAllAccountDetails() {
+    public List<AccountDto> getAllAccountDetails() {
 
-        return accountRepository.findAll();
+        return accountRepository.findAll().stream()
+                .map(accountMapper::toDto)
+                .toList();
     }
 
 
 
-
-    public Account updateAccount(Long account_id, Account account) {
+    public AccountDto updateAccount(Long account_id, AccountDto dto) {
 
         Account account1 = accountRepository.findById(account_id).orElseThrow(() -> new RuntimeException("account not found wiht " + account_id));
-        account1.setAccount_number(account.getAccount_number());
-        account1.setAccount_balance(account.getAccount_balance());
-        return accountRepository.save(account1);
+        accountMapper.updateAccountFromDto(dto,account1);  // المفروض ان ال متسجل دي تي اوو ف اما هاجي اعمل ابديت هعدل ال ف الانتيتي ك دي تي او واحفظه ف ال داتا بيز
+        accountRepository.save(account1);
 
+        AccountDto dto1 =accountMapper.toDto(account1);
+        return dto1;
     }
 
 
@@ -63,8 +72,11 @@ public class AccountServiceImpl {
     }
 
 
-    public List<Account> getAccountsByUser(Long userId) {
-        return accountRepository.findByUserId(userId);
+    public List<AccountDto> getAccountsByUser(Long userId) {
+        return accountRepository.findByUserId(userId)
+                .stream()
+                .map(accountMapper::toDto)
+                .toList();
     }
 
 

@@ -8,6 +8,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -26,6 +27,8 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     private accountType type;
+
+    private LocalDate createdAt = LocalDate.now();
 
 
     public enum accountType {

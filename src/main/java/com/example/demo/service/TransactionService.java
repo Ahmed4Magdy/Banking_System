@@ -1,17 +1,14 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.RequestTransaction;
+import com.example.demo.dto.TransactionDto;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.Transaction;
+import com.example.demo.mapper.TransactionMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,71 +20,73 @@ public class TransactionService {
     private TransactionRepository transactionRepository;
     @Autowired
     private AccountRepository accountRepository;
+    @Autowired
+    private TransactionMapper transactionMapper;
 
     // 1    1000
-    public Transaction Deposit(RequestTransaction request) {
+    public TransactionDto Deposit(TransactionDto dto) {
 
-        Account account = accountRepository.findById(request.getAccountId())
-                .orElseThrow(() -> new RuntimeException("not found account with " + request.getAccountId()));
+        Account account = accountRepository.findById(dto.getAccountId())
+                .orElseThrow(() -> new RuntimeException("not found account with " + dto.getAccountId()));
 
-        account.setAccount_balance(account.getAccount_balance() + request.getAmount());
-        accountRepository.save(account);
+        account.setAccount_balance(account.getAccount_balance() + dto.getAmount());
+        accountRepository.save(account);   // لان اي حسابات لازم تتعمل يدويا من دي تي اوو ل انتيتي
 
-        Transaction transaction = new Transaction();
+        Transaction transaction = transactionMapper.toEntity(dto);
         transaction.setAccount(account);
-        transaction.setType(Transaction.Type.DEPOSIT);
-        transaction.setAmount(request.getAmount());
         transaction.setDate(LocalDateTime.now());
 
+        transaction = transactionRepository.save(transaction);
+        return transactionMapper.toDTO(transaction);
 
-        return transactionRepository.save(transaction);
 
     }
 
 
-    public Transaction Withdraw(RequestTransaction request) {
+    public TransactionDto Withdraw(TransactionDto dto) {
 
-        Account account = accountRepository.findById(request.getAccountId()).orElseThrow(() -> new RuntimeException("not found account with " + request.getAccountId()));
-        if (account.getAccount_balance() < request.getAmount()) {
+        Account account = accountRepository.findById(dto.getAccountId()).orElseThrow(() -> new RuntimeException("not found account with " + dto.getAccountId()));
+        if (account.getAccount_balance() < dto.getAmount()) {
             throw new RuntimeException("Insufficient balance");
         }
-        account.setAccount_balance(account.getAccount_balance() - request.getAmount());
+        account.setAccount_balance(account.getAccount_balance() - dto.getAmount());
         accountRepository.save(account);
 
-        Transaction transaction = new Transaction();
+        Transaction transaction = transactionMapper.toEntity(dto);
         transaction.setAccount(account);
-        transaction.setType(Transaction.Type.WITHDRAW);
-        transaction.setAmount(request.getAmount());
-        transaction.setDate(request.getDate());
+        transaction.setDate(LocalDateTime.now());
 
-        return transactionRepository.save(transaction);
+        transaction = transactionRepository.save(transaction);
+        return transactionMapper.toDTO(transaction);
 
     }
 
 
-    public Transaction Transfer(RequestTransaction request) {
+    public TransactionDto Transfer(TransactionDto dto) {
 
-        Account source = accountRepository.findById(request.getAccountId()).orElseThrow(() -> new RuntimeException("not found account"));
+        Account source = accountRepository.findById(dto.getAccountId()).orElseThrow(() -> new RuntimeException("not found account"));
 
-        Account target = accountRepository.findById(request.getTargetAccountId()).orElseThrow(() -> new RuntimeException("not found account"));
+        Account target = accountRepository.findById(dto.getTargetAccountId()).orElseThrow(() -> new RuntimeException("not found account"));
 
-        if (source.getAccount_balance() < request.getAmount()) {
+        if (source.getAccount_balance() < dto.getAmount()) {
             throw new RuntimeException("Insufficient balance");
         }
 
-        source.setAccount_balance(source.getAccount_balance() - request.getAmount());
-        target.setAccount_balance(target.getAccount_balance() + request.getAmount());
+        source.setAccount_balance(source.getAccount_balance() - dto.getAmount());
+        target.setAccount_balance(target.getAccount_balance() + dto.getAmount());
 
         accountRepository.save(source);
         accountRepository.save(target);
 
-        Transaction transaction = new Transaction();
-        transaction.setType(Transaction.Type.TRANSFER);
-        transaction.setAmount(request.getAmount());
-        transaction.setDate(LocalDateTime.now());
+        Transaction transaction = transactionMapper.toEntity(dto);
         transaction.setAccount(source);
+        transaction.setDate(LocalDateTime.now());
 
-        return transactionRepository.save(transaction);
+        transaction = transactionRepository.save(transaction);
+
+        TransactionDto resultDto = transactionMapper.toDTO(transaction);
+        return resultDto;
+
     }
 
 
@@ -96,10 +95,11 @@ public class TransactionService {
     }
 
 
-    public List<Transaction> getTransactionsByAccount(Long accountId) {
-        return transactionRepository.findByAccountId(accountId);
+    public List<TransactionDto> getTransactionsByAccount(Long accountId) {
+        return transactionRepository.findByAccountId(accountId)
+                .stream()
+                .map(transactionMapper::toDTO).toList();
     }
-
 
 
 }

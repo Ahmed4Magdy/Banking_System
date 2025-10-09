@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.dto.RequestAccount;
+import com.example.demo.dto.AccountDto;
 import com.example.demo.entity.Account;
 import org.springframework.stereotype.Service;
 
@@ -10,17 +10,17 @@ import java.util.List;
 public interface AccountService {
 
 
-    Account CreatAccount(RequestAccount request);
+    AccountDto CreatAccount(AccountDto dto);
 
-    Account getAccountDetailsWithAccountNumber(Long account_id);
+    AccountDto getAccountDetailsWithAccountNumber(Long account_id);
 
-    List<Account> getAllAccountDetails();
+    List<AccountDto> getAllAccountDetails();
 
 
-    Account updateAccount(Long account_id, Account account);
+    AccountDto updateAccount(Long account_id, AccountDto dto);
 
     void CloseAccount(Long account_id);
 
-    List<Account> getAccountsByUser(Long userId);
+    List<AccountDto> getAccountsByUser(Long userId);
 
 }

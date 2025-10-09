@@ -1,10 +1,11 @@
 package com.example.demo.service;
 
 
-import com.example.demo.dto.RequestMonthly;
+import com.example.demo.dto.MonthlyStatementDto;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.MonthlyStatement;
 import com.example.demo.entity.Transaction;
+import com.example.demo.mapper.MonthlyMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.MonthlyStatementRepository;
 import com.example.demo.repository.TransactionRepository;
@@ -24,19 +25,28 @@ public class MonthlyStatementService {
 
     private final TransactionRepository transactionRepository;
 
-    public MonthlyStatementService(MonthlyStatementRepository monthlyStatementRepository, AccountRepository accountRepository, TransactionRepository transactionRepository) {
+    private final MonthlyMapper monthlyMapper;
+
+    public MonthlyStatementService(MonthlyStatementRepository monthlyStatementRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, MonthlyMapper monthlyMapper) {
         this.monthlyStatementRepository = monthlyStatementRepository;
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;
+        this.monthlyMapper = monthlyMapper;
     }
 
 
-    public MonthlyStatement generateStatement(RequestMonthly request, String month, LocalDate upToDate) {
+    public MonthlyStatementDto generateStatement(MonthlyStatementDto request, String month, LocalDate upToDate) {
         Account account = accountRepository.findById(request.getAccountId())
                 .orElseThrow(() -> new RuntimeException("Account not found"));
 
         YearMonth ym = YearMonth.parse(month); // ex: "2025-10"
         LocalDate start = ym.atDay(1);
+
+        // البداية: من أول الشهر أو من يوم إنشاء الحساب لو الحساب جديد
+        LocalDate startt = account.getCreatedAt().isAfter(start)
+                ? account.getCreatedAt()
+                : start;
+
 
         // لو الشهر لسه ماكملش، ناخد لحد اليوم الحالي أو لحد upToDate اللي تبعته
         LocalDate end = (upToDate != null && upToDate.isBefore(ym.atEndOfMonth()))
@@ -96,16 +106,17 @@ public class MonthlyStatementService {
         statement.setSumwithdraw(sumwithdraw);
         statement.setSumtransfer(sumtransfer);
 
-        return monthlyStatementRepository.save(statement);
+        MonthlyStatement saved = monthlyStatementRepository.save(statement);
+
+        return monthlyMapper.toDTO(saved);
 
 
     }
 
 
     //بيجيب كل اكونت الكشف الحساب بتاع الشهر والسنه بتاعه
-    public MonthlyStatement getMonthStatement(RequestMonthly request) {
-
-        return monthlyStatementRepository.findByAccountIdAndMonth(request.getAccountId(), request.getMonth());
-
+    public MonthlyStatementDto getfindByAccountIdAndMonth(Long accountId, String month) {
+        MonthlyStatement statement = monthlyStatementRepository.findByAccountIdAndMonth(accountId, month);
+        return monthlyMapper.toDTO(statement);
     }
 }

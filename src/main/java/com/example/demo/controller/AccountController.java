@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.dto.RequestAccount;
+import com.example.demo.dto.AccountDto;
 import com.example.demo.entity.Account;
 import com.example.demo.service.AccountServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,34 +21,34 @@ public class AccountController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> CreatAccount(@RequestBody RequestAccount request) {
-        Account saveaccount = accountServiceimpl.CreatAccount(request);
+    public ResponseEntity<?> CreatAccount(@RequestBody AccountDto dto) {
+        AccountDto saveaccount = accountServiceimpl.CreatAccount(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saveaccount);
 
     }
 
     @GetMapping("/{account_id}")
-    public Account getAccountDetailsWithAccountNumber(@PathVariable Long account_id) {
+    public AccountDto getAccountDetailsWithAccountNumber(@PathVariable Long account_id) {
         return accountServiceimpl.getAccountDetailsWithAccountNumber(account_id);
 
     }
 
     @GetMapping("")
-    public List<Account> getAllAccountDetails() {
+    public List<AccountDto> getAllAccountDetails() {
 
         return accountServiceimpl.getAllAccountDetails();
     }
 
     @GetMapping("/byuser/{userId}")
-    public List<Account> getAccountsByUser(@PathVariable Long userId) {
+    public List<AccountDto> getAccountsByUser(@PathVariable Long userId) {
         return accountServiceimpl.getAccountsByUser(userId);
     }
 
 
     @PutMapping("/modfiyaccount/{account_id}")
-    public Account updateAccount(@PathVariable Long account_id, @RequestBody Account account) {
+    public AccountDto updateAccount(@PathVariable Long account_id, @RequestBody AccountDto dto) {
 
-        return accountServiceimpl.updateAccount(account_id, account);
+        return accountServiceimpl.updateAccount(account_id, dto);
 
     }
 

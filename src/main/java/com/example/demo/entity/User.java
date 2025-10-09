@@ -36,7 +36,7 @@ public class User {
     }
 
     @OneToMany(mappedBy = "user")
-    @JsonIgnore
+//    @JsonIgnore
     Set<Account> account = new HashSet<>();
 
 

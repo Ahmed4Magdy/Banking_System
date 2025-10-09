@@ -1,13 +1,11 @@
 package com.example.demo.controller;
 
-import com.example.demo.dto.RequestTransaction;
-import com.example.demo.entity.Account;
+import com.example.demo.dto.TransactionDto;
 import com.example.demo.entity.Transaction;
 import com.example.demo.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -18,21 +16,21 @@ public class TransactionController {
     private TransactionService transactionService;
 
     @PostMapping("/deposit")
-    public Transaction Deposit(@RequestBody RequestTransaction request) {
+    public TransactionDto Deposit(@RequestBody TransactionDto request) {
 
         return transactionService.Deposit(request);
 
     }
 
     @PostMapping("/withdraw")
-    public Transaction Withdraw(@RequestBody RequestTransaction request) {
+    public TransactionDto Withdraw(@RequestBody TransactionDto request) {
 
         return transactionService.Withdraw(request);
 
     }
 
     @PostMapping("/transfer")
-    public Transaction Transfer(@RequestBody RequestTransaction request) {
+    public TransactionDto Transfer(@RequestBody TransactionDto request) {
 
         return transactionService.Transfer(request);
 
@@ -47,7 +45,7 @@ public class TransactionController {
 
 
     @GetMapping("/account/{accountId}")
-    public List<Transaction> getTransactionsByAccount(@PathVariable Long accountId) {
+    public List<TransactionDto> getTransactionsByAccount(@PathVariable Long accountId) {
         return transactionService.getTransactionsByAccount(accountId);
     }
 
