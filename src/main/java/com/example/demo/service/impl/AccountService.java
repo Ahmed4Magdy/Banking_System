@@ -1,7 +1,6 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.dto.AccountDto;
-import com.example.demo.entity.Account;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

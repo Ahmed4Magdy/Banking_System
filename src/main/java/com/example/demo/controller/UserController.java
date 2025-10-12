@@ -2,8 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.UserDto;
-import com.example.demo.entity.User;
-import com.example.demo.service.UserService;
+import com.example.demo.service.impl.UserServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,13 +13,13 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceInterface userServiceInterface;
 
 
     @PostMapping("/create")
     public UserDto CreateUser(@RequestBody UserDto dto) {
 
-        return userService.CreateUser(dto);
+        return userServiceInterface.CreateUser(dto);
 
     }
 
@@ -28,18 +27,18 @@ public class UserController {
     @PutMapping("/{id}")
     public UserDto Update(@PathVariable Long id, @RequestBody UserDto dto) {
 
-        return userService.Update(id, dto);
+        return userServiceInterface.Update(id, dto);
     }
 
 
     @GetMapping("")
     public List<UserDto> getAllUsers() {
-        return userService.getAllUsers();
+        return userServiceInterface.getAllUsers();
     }
 
     @GetMapping("/{id}")
     public UserDto getFindByUser(@PathVariable Long id) {
-        return userService.getFindByUser(id);
+        return userServiceInterface.getFindByUser(id);
     }
 
 

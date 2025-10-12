@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.dto.TransactionDto;
 import com.example.demo.entity.Transaction;
 import com.example.demo.service.TransactionService;
+import com.example.demo.service.impl.TransactionServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,26 +14,26 @@ import java.util.List;
 public class TransactionController {
 
     @Autowired
-    private TransactionService transactionService;
+    private TransactionServiceInterface transactionServiceInterface;
 
     @PostMapping("/deposit")
     public TransactionDto Deposit(@RequestBody TransactionDto request) {
 
-        return transactionService.Deposit(request);
+        return transactionServiceInterface.Deposit(request);
 
     }
 
     @PostMapping("/withdraw")
     public TransactionDto Withdraw(@RequestBody TransactionDto request) {
 
-        return transactionService.Withdraw(request);
+        return transactionServiceInterface.Withdraw(request);
 
     }
 
     @PostMapping("/transfer")
     public TransactionDto Transfer(@RequestBody TransactionDto request) {
 
-        return transactionService.Transfer(request);
+        return transactionServiceInterface.Transfer(request);
 
 
     }
@@ -40,13 +41,13 @@ public class TransactionController {
 
     @DeleteMapping("/{id}")
     public void DeleteTarnsaction(@PathVariable Long id){
-        transactionService.DeleteTarnsaction(id);
+        transactionServiceInterface.DeleteTarnsaction(id);
     }
 
 
     @GetMapping("/account/{accountId}")
     public List<TransactionDto> getTransactionsByAccount(@PathVariable Long accountId) {
-        return transactionService.getTransactionsByAccount(accountId);
+        return transactionServiceInterface.getTransactionsByAccount(accountId);
     }
 
 

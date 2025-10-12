@@ -3,6 +3,7 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +13,7 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
-
+@AllArgsConstructor
 public class User {
 
 
@@ -31,12 +32,13 @@ public class User {
 
 
 
+
     public enum Role {
         CUSTOMER, ADMIN
     }
 
     @OneToMany(mappedBy = "user")
-//    @JsonIgnore
+    @JsonIgnore
     Set<Account> account = new HashSet<>();
 
 

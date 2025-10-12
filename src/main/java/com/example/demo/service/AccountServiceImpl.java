@@ -2,15 +2,12 @@ package com.example.demo.service;
 
 import com.example.demo.dto.AccountDto;
 import com.example.demo.entity.Account;
-import com.example.demo.entity.User;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.UserRepository;
-import lombok.experimental.PackagePrivate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Service

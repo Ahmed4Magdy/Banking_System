@@ -1,6 +1,5 @@
 package com.example.demo.service;
 
-
 import com.example.demo.dto.MonthlyStatementDto;
 import com.example.demo.entity.Account;
 import com.example.demo.entity.MonthlyStatement;
@@ -18,7 +17,6 @@ import java.util.List;
 @Service
 public class MonthlyStatementService {
 
-
     private final MonthlyStatementRepository monthlyStatementRepository;
 
     private final AccountRepository accountRepository;
@@ -26,6 +24,7 @@ public class MonthlyStatementService {
     private final TransactionRepository transactionRepository;
 
     private final MonthlyMapper monthlyMapper;
+
 
     public MonthlyStatementService(MonthlyStatementRepository monthlyStatementRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, MonthlyMapper monthlyMapper) {
         this.monthlyStatementRepository = monthlyStatementRepository;
