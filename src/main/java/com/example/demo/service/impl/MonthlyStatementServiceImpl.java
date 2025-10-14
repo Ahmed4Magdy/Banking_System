@@ -1,4 +1,4 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.dto.MonthlyStatementDto;
 import com.example.demo.entity.Account;
@@ -8,6 +8,7 @@ import com.example.demo.mapper.MonthlyMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.MonthlyStatementRepository;
 import com.example.demo.repository.TransactionRepository;
+import com.example.demo.service.MonthlyService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -15,7 +16,7 @@ import java.time.YearMonth;
 import java.util.List;
 
 @Service
-public class MonthlyStatementService {
+public class MonthlyStatementServiceImpl implements MonthlyService {
 
     private final MonthlyStatementRepository monthlyStatementRepository;
 
@@ -26,7 +27,7 @@ public class MonthlyStatementService {
     private final MonthlyMapper monthlyMapper;
 
 
-    public MonthlyStatementService(MonthlyStatementRepository monthlyStatementRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, MonthlyMapper monthlyMapper) {
+    public MonthlyStatementServiceImpl(MonthlyStatementRepository monthlyStatementRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, MonthlyMapper monthlyMapper) {
         this.monthlyStatementRepository = monthlyStatementRepository;
         this.accountRepository = accountRepository;
         this.transactionRepository = transactionRepository;

@@ -2,10 +2,8 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.UserDto;
-import com.example.demo.entity.User;
-import com.example.demo.service.impl.UserServiceInterface;
+import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.jboss.jandex.JandexAntTask;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,7 +30,7 @@ public class UserControllerTest {
     private MockMvc mockMvc;
 
     @Mock
-    private UserServiceInterface userServiceInterface;
+    private UserService userServiceInterface;
 
     @InjectMocks
     private UserController userController;

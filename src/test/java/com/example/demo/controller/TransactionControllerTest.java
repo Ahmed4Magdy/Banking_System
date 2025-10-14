@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.TransactionDto;
-import com.example.demo.service.impl.TransactionServiceInterface;
+import com.example.demo.service.TransactionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,7 +26,7 @@ public class TransactionControllerTest {
     private MockMvc mockMvc; //this built object to simulate http request as post ,get....
 
     @Mock
-    private TransactionServiceInterface transactionServiceInterface;
+    private TransactionService transactionServiceInterface;
 
     @InjectMocks
     private TransactionController transactionController;

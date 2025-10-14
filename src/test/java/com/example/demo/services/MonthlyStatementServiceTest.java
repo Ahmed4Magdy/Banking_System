@@ -7,7 +7,7 @@ import com.example.demo.mapper.MonthlyMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.MonthlyStatementRepository;
 import com.example.demo.repository.TransactionRepository;
-import com.example.demo.service.MonthlyStatementService;
+import com.example.demo.service.impl.MonthlyStatementServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -37,7 +37,7 @@ public class MonthlyStatementServiceTest {
     @Mock
     private MonthlyMapper monthlyMapper;
     @InjectMocks
-    private MonthlyStatementService monthlyStatementService;
+    private MonthlyStatementServiceImpl monthlyStatementService;
 
 
     @Test

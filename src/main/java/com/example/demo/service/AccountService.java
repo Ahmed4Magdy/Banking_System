@@ -1,11 +1,9 @@
-package com.example.demo.service.impl;
+package com.example.demo.service;
 
 import com.example.demo.dto.AccountDto;
-import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
 public interface AccountService {
 
 

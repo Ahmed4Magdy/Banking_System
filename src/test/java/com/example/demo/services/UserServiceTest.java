@@ -1,12 +1,11 @@
 package com.example.demo.services;
 
 
-import com.example.demo.dto.AccountDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.UserService;
+import com.example.demo.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -35,7 +34,7 @@ public class UserServiceTest {
 
 
     @InjectMocks
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Test
     void CreateUser_Success() {

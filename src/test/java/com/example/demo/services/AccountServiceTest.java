@@ -7,7 +7,7 @@ import com.example.demo.entity.User;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.UserRepository;
-import com.example.demo.service.AccountServiceImpl;
+import com.example.demo.service.impl.AccountServiceImpl;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

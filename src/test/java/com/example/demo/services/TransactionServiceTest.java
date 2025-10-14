@@ -7,7 +7,7 @@ import com.example.demo.entity.Transaction;
 import com.example.demo.mapper.TransactionMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.TransactionRepository;
-import com.example.demo.service.TransactionService;
+import com.example.demo.service.impl.TransactionServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -34,7 +34,7 @@ public class TransactionServiceTest {
     private TransactionMapper transactionMapper;
 
     @InjectMocks
-    private TransactionService transactionService;
+    private TransactionServiceImpl transactionService;
 
 
     @Test

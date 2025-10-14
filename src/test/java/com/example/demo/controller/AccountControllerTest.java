@@ -1,10 +1,11 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.AccountDto;
-import com.example.demo.service.impl.AccountService;
+import com.example.demo.service.AccountService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.MediaType;
@@ -27,13 +28,14 @@ public class AccountControllerTest {
     @Mock
     private AccountService accountService;
 
+    @InjectMocks
+    private AccountController accountController;
 
     private AccountDto accountDto;
 
     @BeforeEach
     void setup() {
-        AccountController controller = new AccountController(accountService); // ✅ مرر الـ mock هنا
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(accountController).build();
 
         accountDto = new AccountDto();
         accountDto.setUserId(1L);
@@ -102,17 +104,14 @@ public class AccountControllerTest {
 // eq will use when exist matcher 1L ,any and if alone will use 1L direct
 
 
+    @Test
+    void testDeleteAccount() throws Exception {
 
+        doNothing().when(accountService).CloseAccount(1L);
 
+        mockMvc.perform(delete("/account/1"))
+                .andExpect(status().isOk());
 
-@Test
-void testDeleteAccount() throws Exception {
-
-    doNothing().when(accountService).CloseAccount(1L);
-
-    mockMvc.perform(delete("/account/1"))
-            .andExpect(status().isOk());
-
-}
+    }
 
 }

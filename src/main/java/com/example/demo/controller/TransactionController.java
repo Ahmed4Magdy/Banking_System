@@ -1,9 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.dto.TransactionDto;
-import com.example.demo.entity.Transaction;
 import com.example.demo.service.TransactionService;
-import com.example.demo.service.impl.TransactionServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +12,7 @@ import java.util.List;
 public class TransactionController {
 
     @Autowired
-    private TransactionServiceInterface transactionServiceInterface;
+    private TransactionService transactionServiceInterface;
 
     @PostMapping("/deposit")
     public TransactionDto Deposit(@RequestBody TransactionDto request) {

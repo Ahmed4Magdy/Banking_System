@@ -2,7 +2,7 @@ package com.example.demo.controller;
 
 
 import com.example.demo.dto.UserDto;
-import com.example.demo.service.impl.UserServiceInterface;
+import com.example.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,7 +13,7 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserServiceInterface userServiceInterface;
+    private UserService userServiceInterface;
 
 
     @PostMapping("/create")
