@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.AccountDto;
 import com.example.demo.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AccountController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> CreatAccount(@RequestBody AccountDto dto) {
+    public ResponseEntity<?> CreatAccount(@Valid @RequestBody AccountDto dto) {
         AccountDto saveaccount = accountService.CreatAccount(dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(saveaccount);
 
@@ -45,7 +46,7 @@ public class AccountController {
 
 
     @PutMapping("/modfiyaccount/{account_id}")
-    public AccountDto updateAccount(@PathVariable Long account_id, @RequestBody AccountDto dto) {
+    public AccountDto updateAccount(@PathVariable Long account_id,@Valid @RequestBody AccountDto dto) {
 
         return accountService.updateAccount(account_id, dto);
 

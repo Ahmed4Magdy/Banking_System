@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class UserController {
 
 
     @PostMapping("/create")
-    public UserDto CreateUser(@RequestBody UserDto dto) {
+    public UserDto CreateUser(@Valid @RequestBody UserDto dto) {
 
         return userServiceInterface.CreateUser(dto);
 
@@ -25,7 +26,7 @@ public class UserController {
 
 
     @PutMapping("/{id}")
-    public UserDto Update(@PathVariable Long id, @RequestBody UserDto dto) {
+    public UserDto Update(@PathVariable Long id,@Valid @RequestBody UserDto dto) {
 
         return userServiceInterface.Update(id, dto);
     }

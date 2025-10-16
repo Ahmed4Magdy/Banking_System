@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.dto.TransactionDto;
 import com.example.demo.service.TransactionService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,21 +16,21 @@ public class TransactionController {
     private TransactionService transactionServiceInterface;
 
     @PostMapping("/deposit")
-    public TransactionDto Deposit(@RequestBody TransactionDto request) {
+    public TransactionDto Deposit(@RequestBody @Valid TransactionDto request) {
 
         return transactionServiceInterface.Deposit(request);
 
     }
 
     @PostMapping("/withdraw")
-    public TransactionDto Withdraw(@RequestBody TransactionDto request) {
+    public TransactionDto Withdraw(@RequestBody @Valid TransactionDto request) {
 
         return transactionServiceInterface.Withdraw(request);
 
     }
 
     @PostMapping("/transfer")
-    public TransactionDto Transfer(@RequestBody TransactionDto request) {
+    public TransactionDto Transfer(@RequestBody @Valid TransactionDto request) {
 
         return transactionServiceInterface.Transfer(request);
 
