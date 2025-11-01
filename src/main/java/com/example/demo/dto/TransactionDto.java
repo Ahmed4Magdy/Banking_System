@@ -23,7 +23,7 @@ public class TransactionDto {
     @Positive(message = "Amount must be positive")
     private double amount;
 
-    @NotNull(message = "Transaction date is required")
+//    @NotNull(message = "Transaction date is required")
     private LocalDateTime date;
 
     @NotNull(message = "Account ID is required")

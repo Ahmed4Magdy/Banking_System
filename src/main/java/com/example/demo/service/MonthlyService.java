@@ -11,5 +11,6 @@ public interface MonthlyService {
 
     MonthlyStatementDto getfindByAccountIdAndMonth(Long accountId, String month);
 
+     void delete(Long id);
 
 }

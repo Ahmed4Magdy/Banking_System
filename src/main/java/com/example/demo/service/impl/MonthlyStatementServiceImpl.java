@@ -56,7 +56,7 @@ public class MonthlyStatementServiceImpl implements MonthlyService {
         List<Transaction> monthlyTransactions =
                 transactionRepository.findByAccountAndDateBetween(account, start.atStartOfDay(), end.atTime(23, 59));
 
-        double openingsbalance = account.getAccount_balance();
+        double openingsbalance = account.getAccount_balance(); //3000 ..2400
         for (Transaction t : monthlyTransactions) {
             if (t.getType() == Transaction.Type.DEPOSIT) {
                 openingsbalance -= t.getAmount();
@@ -95,6 +95,18 @@ public class MonthlyStatementServiceImpl implements MonthlyService {
 
         }
 
+        MonthlyStatement existing = monthlyStatementRepository.findByAccountIdAndMonth(account.getAccount_id(), month);
+        if (existing != null) {
+
+            existing.setSumdeposit(sumdeposit);
+            existing.setSumwithdraw(sumwithdraw);
+            existing.setSumtransfer(sumtransfer);
+            existing.setInterestAdded(interest);
+            existing.setClosingBalance(account.getAccount_balance() + interest);
+            MonthlyStatement monthexisting = monthlyStatementRepository.save(existing);
+            return monthlyMapper.toDTO(monthexisting);
+
+        }
 
         MonthlyStatement statement = new MonthlyStatement();
         statement.setAccount(account);
@@ -106,6 +118,7 @@ public class MonthlyStatementServiceImpl implements MonthlyService {
         statement.setSumwithdraw(sumwithdraw);
         statement.setSumtransfer(sumtransfer);
 
+
         MonthlyStatement saved = monthlyStatementRepository.save(statement);
 
         return monthlyMapper.toDTO(saved);
@@ -114,9 +127,15 @@ public class MonthlyStatementServiceImpl implements MonthlyService {
     }
 
 
-    //بيجيب كل اكونت الكشف الحساب بتاع الشهر والسنه بتاعه
+    //    بيجيب كل اكونت الكشف الحساب بتاع الشهر والسنه بتاعه
     public MonthlyStatementDto getfindByAccountIdAndMonth(Long accountId, String month) {
         MonthlyStatement statement = monthlyStatementRepository.findByAccountIdAndMonth(accountId, month);
         return monthlyMapper.toDTO(statement);
     }
+
+
+    public void delete(Long id){
+        monthlyStatementRepository.deleteById(id);
+    }
+
 }

@@ -23,7 +23,7 @@ public interface AccountMapper {
 
 
 
-    @Mapping(target = "account_id", ignore = true)
+    @Mapping(target = "account_id", ignore = true) // ال هو ال id
     @Mapping(target = "user",ignore = true)
     void updateAccountFromDto(AccountDto dto, @MappingTarget Account entity);
 

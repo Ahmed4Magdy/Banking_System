@@ -66,7 +66,7 @@ public class AccountServiceTest {
 
 
     @Test
-    @DisplayName("createAccount_success")
+    @DisplayName("createAccount_nosuccess")
     void createAccount_nosuccess() {
         User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", User.Role.CUSTOMER, null);
 
@@ -101,7 +101,7 @@ public class AccountServiceTest {
         AccountDto dto = new AccountDto();
         dto.setUserId(10L);
 
-        when(userRepository.findById(10L)).thenReturn(Optional.empty());
+        when(userRepository.findById(1L)).thenReturn(Optional.empty());// انا هنا ال بتحكم بقول لموكيتو لما ارجعللك كذا يبقي كذا هتقولي مهو فيه يوزر الكلام ده لو بيانات حقيقه طالما قولتله هيرجع فاضي فهينتظر اكسبشن علشان يعدي ويطلع صح
 
         RuntimeException exception = assertThrows(RuntimeException.class,
                 () -> accountServiceimpl.CreatAccount(dto));
@@ -114,7 +114,7 @@ public class AccountServiceTest {
 
     @Test
     void getAccountsByUser() {
-        User user = new User(10L, "Ahmed", "ahmed@example.com", "123ww", User.Role.CUSTOMER, null);
+        User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", User.Role.CUSTOMER, null);
         Account account1 = new Account(1L, "ac12", 2000.0, Account.accountType.CURRENT, LocalDate.now(), user, null, null);
         Account account2 = new Account(2L, "ac122", 2000.0, Account.accountType.SAVINGS, LocalDate.now(), user, null, null);
 
@@ -122,7 +122,7 @@ public class AccountServiceTest {
         dto1.setAccount_id(1L);
         dto1.setAccount_number("ac12");
         dto1.setAccount_balance(2000.0);
-        dto1.setType(Account.accountType.CURRENT);
+        dto1.setType(Account.accountType.SAVINGS);
         dto1.setUserId(1L);
 
         AccountDto dto2 = new AccountDto();
@@ -133,7 +133,7 @@ public class AccountServiceTest {
         dto2.setUserId(1L);
 
 
-        when(accountRepository.findByUserId(10L)).thenReturn(List.of(account1,account2));
+        when(accountRepository.findByUserId(1L)).thenReturn(List.of(account1,account2));
         when(accountMapper.toDto(account1)).thenReturn(dto1);
         when(accountMapper.toDto(account2)).thenReturn(dto2);
 

@@ -65,6 +65,8 @@ public class TransactionServiceImpl implements TransactionService {
 
     public TransactionDto Transfer(TransactionDto dto) {
 
+
+        //this for account and
         Account source = accountRepository.findById(dto.getAccountId()).orElseThrow(() -> new RuntimeException("not found account"));
 
         Account target = accountRepository.findById(dto.getTargetAccountId()).orElseThrow(() -> new RuntimeException("not found account"));
@@ -79,7 +81,10 @@ public class TransactionServiceImpl implements TransactionService {
         accountRepository.save(source);
         accountRepository.save(target);
 
-        Transaction transaction = transactionMapper.toEntity(dto);
+
+
+
+        Transaction transaction = transactionMapper.toEntity(dto); //
         transaction.setAccount(source);
         transaction.setDate(LocalDateTime.now());
 

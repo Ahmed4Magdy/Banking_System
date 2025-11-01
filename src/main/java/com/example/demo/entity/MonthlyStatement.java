@@ -22,6 +22,7 @@ public class MonthlyStatement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "`month`") // ✅ غلفها بعلامات backtick
     private String month;
 
     private Double openingBalance;
