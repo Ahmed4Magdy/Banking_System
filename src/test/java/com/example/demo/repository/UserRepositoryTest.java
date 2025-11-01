@@ -22,9 +22,27 @@ public class UserRepositoryTest {
     @BeforeEach
     void setup() {
 
-        user = new User(null,"Ahmed Magdy", "ahmed@gmail.com", "21312", User.Role.CUSTOMER, null);
+
+        user = new User(null, "Ahmed Magdy", "ahmed@gmail.com", "21312", User.Role.CUSTOMER, null);
 
 
+    }
+
+
+    @Test
+    void register() {
+
+        User saved = userRepository.save(user);
+        assertThat(saved).isNotNull();
+
+    }
+
+
+    @Test
+    void login() {
+        userRepository.save(user);
+        User saved = userRepository.findByEmail(user.getEmail()).orElseThrow(() -> new RuntimeException("this is email not found"));
+        assertThat(user.getEmail()).isEqualTo("ahmed@gmail.com");
 
     }
 
@@ -45,8 +63,6 @@ public class UserRepositoryTest {
 
 
     }
-
-
 
 
 }

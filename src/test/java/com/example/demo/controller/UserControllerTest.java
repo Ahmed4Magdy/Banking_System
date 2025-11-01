@@ -1,9 +1,13 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.LoginResponseDto;
+import com.example.demo.dto.SignupDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,6 +27,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Slf4j
 @ExtendWith(MockitoExtension.class)
 public class UserControllerTest {
 
@@ -37,6 +42,13 @@ public class UserControllerTest {
 
     private UserDto dto;
 
+    private SignupDto signupdto;
+
+    private LoginDto logindto;
+
+    private LoginResponseDto loginResponseDto;
+
+
     @BeforeEach
     void setup() {
 
@@ -45,8 +57,41 @@ public class UserControllerTest {
         dto.setId(1L);
         dto.setEmail("ahmed@gmail.com");
 
+        signupdto = new SignupDto();
+        signupdto.setEmail("ahmed@gmail.com");
+
+        logindto = new LoginDto();
+        logindto.setEmail("ahmed@gmail.com");
+
+        loginResponseDto = new LoginResponseDto();
+        loginResponseDto.setEmail("ahmed@gmail.com");
     }
 
+
+    @Test
+    void reigster() throws Exception {
+
+        when(userServiceInterface.register(any(SignupDto.class))).thenReturn(signupdto);
+
+        mockMvc.perform(post("/user/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(signupdto)))
+                .andExpect(status().isOk());
+
+    }
+
+
+    @Test
+    void login() throws Exception {
+
+        when(userServiceInterface.login(any(LoginDto.class))).thenReturn(loginResponseDto);
+
+        mockMvc.perform(post("/user/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(logindto)))
+                .andExpect(status().isOk());
+
+    }
 
     @Test
     void testCreateUser() throws Exception {
@@ -98,7 +143,6 @@ public class UserControllerTest {
 
 
     }
-
 
 
 }

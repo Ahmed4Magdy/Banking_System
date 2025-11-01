@@ -1,8 +1,13 @@
 package com.example.demo.services;
 
 
+import com.example.demo.dto.LoginDto;
+import com.example.demo.dto.LoginResponseDto;
+import com.example.demo.dto.SignupDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
+import com.example.demo.mapper.LoginMapper;
+import com.example.demo.mapper.SignupMapper;
 import com.example.demo.mapper.UserMapper;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.impl.UserServiceImpl;
@@ -15,6 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.when;
@@ -30,11 +36,59 @@ public class UserServiceTest {
     private UserMapper userMapper;
 
     @Mock
+    private SignupMapper signupMapper;
+
+    @Mock
+    private LoginMapper loginMapper;
+
+    @Mock
     private PasswordEncoder passwordEncoder;
 
 
     @InjectMocks
     private UserServiceImpl userService;
+
+
+    @Test
+    void register() {
+        User user = new User(1L, "Ahmed", "ahmed@gmail.com", null, null, null);
+
+        SignupDto dto = new SignupDto();
+        dto.setEmail("ahmed@gmail.com");
+
+        when(signupMapper.toEntity(dto)).thenReturn(user);
+        when(userRepository.save(user)).thenReturn(user);
+        when(signupMapper.toDto(user)).thenReturn(dto);
+
+
+        SignupDto result = userService.register(dto);
+
+
+        assertNotNull(result);
+
+
+    }
+
+
+    @Test
+    void login() {
+
+        User user = new User(1L, "Ahmed", "ahmed@gmail.com", null, null, null);
+        LoginDto dto = new LoginDto();
+        dto.setEmail("ahmed@gmail.com");
+        LoginResponseDto dto1 =new LoginResponseDto();
+        dto1.setEmail("ahmed@gmail.com");
+
+        when(userRepository.findByEmail(dto.getEmail())).thenReturn(Optional.of(user));
+        when(passwordEncoder.matches(dto.getPassword(), user.getPassword())).thenReturn(true);
+
+        when(loginMapper.toLoginResponseDto(user)).thenReturn(dto1);
+
+        LoginResponseDto result =userService.login(dto);
+
+
+    }
+
 
     @Test
     void CreateUser_Success() {
