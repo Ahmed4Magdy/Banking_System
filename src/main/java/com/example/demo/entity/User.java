@@ -3,6 +3,7 @@ package com.example.demo.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,29 +19,20 @@ import java.util.Set;
 @NoArgsConstructor
 @Table(name = "`user`")
 public class User {
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    @Column
     private String name;
-
+    @Column(unique = true)
     private String email;
-
+    @Column
     private String password;
-
     @Enumerated(EnumType.STRING)
-    private Role role;
-
-
-    public enum Role {
-        CUSTOMER, ADMIN
-    }
-
+    @Column
+    private UserRole role;
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     Set<Account> account = new HashSet<>();
-
 
 }

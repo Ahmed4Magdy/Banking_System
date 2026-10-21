@@ -9,9 +9,10 @@ import org.mapstruct.Mapping;
 public interface SignupMapper {
 
 
-//    @Mapping(target = "id", ignore = true)
+    //    @Mapping(target = "id", ignore = true)
 //    @Mapping(target = "role", ignore = true)
 //    @Mapping(target = "account",ignore = true)
+    @Mapping(target = "password", ignore = true)
     User toEntity(SignupDto dto);
 
 

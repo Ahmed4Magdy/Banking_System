@@ -19,12 +19,14 @@ public interface AccountMapper {
 
     @Mapping(target = "transaction", ignore = true)
     @Mapping(target = "monthlyStatements", ignore = true)
+    @Mapping(target = "user",ignore = true)
     Account toEntity(AccountDto dto);
-
 
 
     @Mapping(target = "account_id", ignore = true) // ال هو ال id
     @Mapping(target = "user",ignore = true)
+    @Mapping(target = "transaction", ignore = true)
+    @Mapping(target = "monthlyStatements", ignore = true)
     void updateAccountFromDto(AccountDto dto, @MappingTarget Account entity);
 
 }

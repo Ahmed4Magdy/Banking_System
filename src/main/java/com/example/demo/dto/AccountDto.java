@@ -1,6 +1,7 @@
 package com.example.demo.dto;
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.AccountType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
@@ -19,7 +20,7 @@ public class AccountDto {
     @Positive(message = "Balance must be greater than zero")
     private double account_balance;
     @NotNull(message = "Account type is required") //Because type is an enum field, not a String or List.
-    private Account.accountType type;
+    private AccountType type;
     @NotNull(message = "User ID is required")
     private Long userId;
 

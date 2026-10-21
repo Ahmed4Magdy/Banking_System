@@ -5,7 +5,6 @@ import com.example.demo.dto.LoginDto;
 import com.example.demo.dto.LoginResponseDto;
 import com.example.demo.dto.SignupDto;
 import com.example.demo.dto.UserDto;
-import com.example.demo.entity.User;
 import com.example.demo.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ public class UserController {
     @PostMapping("/register")
     public SignupDto register(@RequestBody SignupDto dto) {
 
-
         return userServiceInterface.register(dto);
 
     }
@@ -33,9 +31,7 @@ public class UserController {
     @PostMapping("/login")
     public LoginResponseDto login(@RequestBody LoginDto dto) {
 
-
         return userServiceInterface.login(dto);
-
     }
 
 

@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.dto.MonthlyStatementDto;
 import com.example.demo.entity.Account;
+import com.example.demo.entity.AccountType;
 import com.example.demo.entity.MonthlyStatement;
 import com.example.demo.mapper.MonthlyMapper;
 import com.example.demo.repository.AccountRepository;
@@ -47,7 +48,7 @@ public class MonthlyStatementServiceTest {
         MonthlyStatementDto dto = new MonthlyStatementDto();
         dto.setAccountId(1L);
 
-        Account account = new Account(1L, "ac12", 2000.0, Account.accountType.SAVINGS, LocalDate.now(), null, null, null);
+        Account account = new Account(1L, "ac12", 2000.0, AccountType.SAVINGS, LocalDate.now(), null, null, null);
 
         MonthlyStatement entity = new MonthlyStatement();
         entity.setId(100L);

@@ -22,7 +22,7 @@ public class AccountServiceImpl implements AccountService {
     private AccountMapper accountMapper;
 
     @Override
-    public AccountDto CreatAccount(AccountDto dto) {
+    public AccountDto CreateAccount(AccountDto dto) {
 
         Account account = accountMapper.toEntity(dto);
 
@@ -56,7 +56,7 @@ public class AccountServiceImpl implements AccountService {
     public AccountDto updateAccount(Long account_id, AccountDto dto) {
 
         Account account1 = accountRepository.findById(account_id).orElseThrow(() -> new RuntimeException("account not found wiht " + account_id));
-        accountMapper.updateAccountFromDto(dto, account1);  // المفروض ان ال متسجل دي تي اوو ف اما هاجي اعمل ابديت هعدل ال ف الانتيتي ك دي تي او واحفظه ف ال داتا بيز
+        accountMapper.updateAccountFromDto(dto, account1);  // المفروض ان ال متسجل دي تي اوو ف اما هاجي اعمل ابديت هعال ف الانتيتي ك دي تي او واحفظه ف ال داتا بيز
         accountRepository.save(account1);
 
         AccountDto dto1 = accountMapper.toDto(account1);

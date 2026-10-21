@@ -3,7 +3,9 @@ package com.example.demo.services;
 
 import com.example.demo.dto.AccountDto;
 import com.example.demo.entity.Account;
+import com.example.demo.entity.AccountType;
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserRole;
 import com.example.demo.mapper.AccountMapper;
 import com.example.demo.repository.AccountRepository;
 import com.example.demo.repository.UserRepository;
@@ -38,15 +40,15 @@ public class AccountServiceTest {
     @Test
     @DisplayName("createAccount_success")
     void createAccount_success() {
-        User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", User.Role.CUSTOMER, null);
+        User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", UserRole.CUSTOMER, null);
 
-        Account account = new Account(1L, "ac12", 2000.0, Account.accountType.CURRENT, LocalDate.now(), user, null, null);
+        Account account = new Account(1L, "ac12", 2000.0, AccountType.CURRENT, LocalDate.now(), user, null, null);
 
         AccountDto dto = new AccountDto();
         dto.setAccount_id(1L);
         dto.setAccount_number("ac12");
         dto.setAccount_balance(2000.0);
-        dto.setType(Account.accountType.CURRENT);
+        dto.setType(AccountType.CURRENT);
         dto.setUserId(1L);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
@@ -55,7 +57,7 @@ public class AccountServiceTest {
         when(accountMapper.toDto(account)).thenReturn(dto);
 
 
-        AccountDto result = accountServiceimpl.CreatAccount(dto);
+        AccountDto result = accountServiceimpl.CreateAccount(dto);
         assertNotNull(result);
         assertEquals("ac12", result.getAccount_number());
         assertEquals(2000.0, result.getAccount_balance());
@@ -68,15 +70,15 @@ public class AccountServiceTest {
     @Test
     @DisplayName("createAccount_nosuccess")
     void createAccount_nosuccess() {
-        User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", User.Role.CUSTOMER, null);
 
-        Account account = new Account(1L, "ac12", 2000.0, Account.accountType.CURRENT, LocalDate.now(), user, null, null);
+        User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", UserRole.CUSTOMER, null);
+        Account account = new Account(1L, "ac12", 2000.0, AccountType.CURRENT, LocalDate.now(), user, null, null);
 
         AccountDto dto = new AccountDto();
         dto.setAccount_id(1L);
         dto.setAccount_number("ac12");
         dto.setAccount_balance(2000.0);
-        dto.setType(Account.accountType.CURRENT);
+        dto.setType(AccountType.CURRENT);
         dto.setUserId(1L);
 
         when(userRepository.findById(1L)).thenReturn(Optional.of(user));
@@ -85,7 +87,7 @@ public class AccountServiceTest {
         when(accountMapper.toDto(account)).thenReturn(dto);
 
 
-        AccountDto result = accountServiceimpl.CreatAccount(dto);
+        AccountDto result = accountServiceimpl.CreateAccount(dto);
         assertNotNull(result);
         assertEquals("ac412", result.getAccount_number());
         assertEquals(2000.0, result.getAccount_balance());
@@ -104,7 +106,7 @@ public class AccountServiceTest {
         when(userRepository.findById(1L)).thenReturn(Optional.empty());// انا هنا ال بتحكم بقول لموكيتو لما ارجعللك كذا يبقي كذا هتقولي مهو فيه يوزر الكلام ده لو بيانات حقيقه طالما قولتله هيرجع فاضي فهينتظر اكسبشن علشان يعدي ويطلع صح
 
         RuntimeException exception = assertThrows(RuntimeException.class,
-                () -> accountServiceimpl.CreatAccount(dto));
+                () -> accountServiceimpl.CreateAccount(dto));
 
         assertEquals("User not found", exception.getMessage());
 
@@ -114,22 +116,22 @@ public class AccountServiceTest {
 
     @Test
     void getAccountsByUser() {
-        User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", User.Role.CUSTOMER, null);
-        Account account1 = new Account(1L, "ac12", 2000.0, Account.accountType.CURRENT, LocalDate.now(), user, null, null);
-        Account account2 = new Account(2L, "ac122", 2000.0, Account.accountType.SAVINGS, LocalDate.now(), user, null, null);
+        User user = new User(1L, "Ahmed", "ahmed@example.com", "123ww", UserRole.CUSTOMER, null);
+        Account account1 = new Account(1L, "ac12", 2000.0, AccountType.CURRENT, LocalDate.now(), user, null, null);
+        Account account2 = new Account(2L, "ac122", 2000.0, AccountType.SAVINGS, LocalDate.now(), user, null, null);
 
         AccountDto dto1 = new AccountDto();
         dto1.setAccount_id(1L);
         dto1.setAccount_number("ac12");
         dto1.setAccount_balance(2000.0);
-        dto1.setType(Account.accountType.SAVINGS);
+        dto1.setType(AccountType.SAVINGS);
         dto1.setUserId(1L);
 
         AccountDto dto2 = new AccountDto();
         dto2.setAccount_id(1L);
         dto2.setAccount_number("ac12");
         dto2.setAccount_balance(2000.0);
-        dto2.setType(Account.accountType.CURRENT);
+        dto2.setType(AccountType.CURRENT);
         dto2.setUserId(1L);
 
 

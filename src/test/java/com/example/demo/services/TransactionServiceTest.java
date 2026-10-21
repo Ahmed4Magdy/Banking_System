@@ -55,14 +55,13 @@ public class TransactionServiceTest {
         when(transactionRepository.save(transaction)).thenReturn(transaction);
         when(transactionMapper.toDTO(transaction)).thenReturn(dto);
 
-        TransactionDto result =transactionService.Deposit(dto);
+        TransactionDto result = transactionService.Deposit(dto);
 
         assertEquals(dto, result);
         assertEquals(2500.0, account.getAccount_balance());
 
 
     }
-
 
 
     @Test
@@ -83,14 +82,13 @@ public class TransactionServiceTest {
         when(transactionRepository.save(transaction)).thenReturn(transaction);
         when(transactionMapper.toDTO(transaction)).thenReturn(dto);
 
-        TransactionDto result =transactionService.Withdraw(dto);
+        TransactionDto result = transactionService.Withdraw(dto);
 
         assertEquals(dto, result);
         assertEquals(1500.0, account.getAccount_balance());
 
 
     }
-
 
 
     @Test
@@ -115,7 +113,7 @@ public class TransactionServiceTest {
         when(transactionRepository.save(transaction)).thenReturn(transaction);
         when(transactionMapper.toDTO(transaction)).thenReturn(dto);
 
-        TransactionDto result =transactionService.Transfer(dto);
+        TransactionDto result = transactionService.Transfer(dto);
 
         assertEquals(dto, result);
         assertEquals(1500.0, account1.getAccount_balance());
@@ -123,10 +121,6 @@ public class TransactionServiceTest {
 
 
     }
-
-
-
-
 
 
 }

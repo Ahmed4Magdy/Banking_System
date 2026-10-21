@@ -2,6 +2,7 @@ package com.example.demo.repository;
 
 
 import com.example.demo.entity.Account;
+import com.example.demo.entity.AccountType;
 import com.example.demo.entity.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,8 +32,8 @@ public class AccountRepositoryTest {
 
         user = new User();
         userRepository.save(user);
-        account = new Account(1L, "AA12", 1000.0, Account.accountType.CURRENT, null, user, null, null);
-        Account acc2 = new Account(2L, "acc456", 2000.0, Account.accountType.CURRENT, null, user, null, null);
+        account = new Account(1L, "AA12", 1000.0, AccountType.CURRENT, null, user, null, null);
+        Account acc2 = new Account(2L, "acc456", 2000.0, AccountType.CURRENT, null, user, null, null);
 
         accountRepository.saveAll(List.of(account, acc2));
 
@@ -54,7 +55,7 @@ public class AccountRepositoryTest {
 
     @Test
     void testSaveAccount() {
-        Account account = new Account(null, "acc789", 3000.0, Account.accountType.SAVINGS, LocalDate.now(), user, null, null);
+        Account account = new Account(null, "acc789", 3000.0, AccountType.SAVINGS, LocalDate.now(), user, null, null);
         Account saved = accountRepository.save(account);
 
         assertThat(saved.getAccount_id()).isNotNull();

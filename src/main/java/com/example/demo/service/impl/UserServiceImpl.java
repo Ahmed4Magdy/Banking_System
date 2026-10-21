@@ -5,6 +5,7 @@ import com.example.demo.dto.LoginResponseDto;
 import com.example.demo.dto.SignupDto;
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserRole;
 import com.example.demo.mapper.LoginMapper;
 import com.example.demo.mapper.SignupMapper;
 import com.example.demo.mapper.UserMapper;
@@ -37,9 +38,13 @@ public class UserServiceImpl implements UserService {
 
     public SignupDto register(SignupDto dto) {
 
+        if(userRepository.findByEmail(dto.getEmail()).isPresent()){
+            throw new RuntimeException("this email is already exist !");
+        }
+
         User user = signupMapper.toEntity(dto);
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
-        user.setRole(User.Role.CUSTOMER);
+        user.setRole(UserRole.CUSTOMER);
 
         User saved = userRepository.save(user);
 
@@ -77,18 +82,16 @@ public class UserServiceImpl implements UserService {
     // 1 2 4
     public UserDto Update(Long id, UserDto dto) {
 
-        User userexist = userRepository.findById(id).orElseThrow(() -> new RuntimeException("not found user with " + id));
+        User existing = userRepository.findById(id).orElseThrow(() -> new RuntimeException("not found user with " + id));
 
-        userMapper.updateUserFromDto(dto, userexist);  //update name,role,email and ignore password because no touch otherwise if user need change password
+        userMapper.updateUserFromDto(dto, existing);  //update name,role,email and ignore password because no touch otherwise if user need change password
         if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-            userexist.setPassword(passwordEncoder.encode(dto.getPassword()));
+            existing.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
-        userRepository.save(userexist);
+        userRepository.save(existing);
 
-        UserDto userDto = userMapper.toDto(userexist);
-        return userDto;
-
+        return userMapper.toDto(existing);
 
     }
 
@@ -102,8 +105,8 @@ public class UserServiceImpl implements UserService {
     }
 
     public UserDto getFindByUser(Long id) {
-        User userexist = userRepository.findById(id).orElseThrow(() -> new RuntimeException("not found user with" + id));
-        return userMapper.toDto(userexist);
+        User existing = userRepository.findById(id).orElseThrow(() -> new RuntimeException("not found user with" + id));
+        return userMapper.toDto(existing);
     }
 
 

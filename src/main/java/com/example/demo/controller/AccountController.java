@@ -21,9 +21,9 @@ public class AccountController {
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> CreatAccount(@Valid @RequestBody AccountDto dto) {
-        AccountDto saveaccount = accountService.CreatAccount(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(saveaccount);
+    public ResponseEntity<?> CreateAccount(@Valid @RequestBody AccountDto dto) {
+        AccountDto saveAccount = accountService.CreateAccount(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saveAccount);
 
     }
 

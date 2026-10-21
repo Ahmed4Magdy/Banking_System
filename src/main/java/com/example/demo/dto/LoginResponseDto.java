@@ -1,6 +1,6 @@
 package com.example.demo.dto;
 
-import com.example.demo.entity.User;
+import com.example.demo.entity.UserRole;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +13,7 @@ public class LoginResponseDto {
 
     private String email;
 
-    private User.Role role;
+    private UserRole role;
 
 
 }

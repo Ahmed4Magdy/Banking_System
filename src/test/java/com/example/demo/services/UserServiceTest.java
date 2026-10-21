@@ -56,6 +56,7 @@ public class UserServiceTest {
         SignupDto dto = new SignupDto();
         dto.setEmail("ahmed@gmail.com");
 
+
         when(signupMapper.toEntity(dto)).thenReturn(user);
         when(userRepository.save(user)).thenReturn(user);
         when(signupMapper.toDto(user)).thenReturn(dto);

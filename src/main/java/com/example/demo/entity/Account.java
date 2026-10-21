@@ -30,17 +30,9 @@ public class Account {
     private double account_balance;
 
     @Enumerated(EnumType.STRING)
-    private accountType type;
+    private AccountType type;
 
     private LocalDate createdAt = LocalDate.now();
-
-
-
-
-    public enum accountType {
-        SAVINGS, CURRENT
-    }
-
 
     @ManyToOne
     @JoinColumn(name = "user_id")

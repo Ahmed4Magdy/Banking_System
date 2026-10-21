@@ -49,7 +49,7 @@ public class AccountControllerTest {
     @Test
     void testCreateAccount() throws Exception {
 
-        when(accountService.CreatAccount(accountDto)).thenReturn(accountDto);
+        when(accountService.CreateAccount(accountDto)).thenReturn(accountDto);
 
         mockMvc.perform(post("/account/create")
                         .contentType(MediaType.APPLICATION_JSON)

@@ -2,6 +2,7 @@ package com.example.demo.dto;
 
 
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserRole;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,7 @@ public class UserDto {
     @Size(min = 6, message = "Password must be at least 6 characters long")
     private String password;
     @NotNull(message = "Role type is required")
-    public User.Role role;
+    public UserRole role;
 
 
 }

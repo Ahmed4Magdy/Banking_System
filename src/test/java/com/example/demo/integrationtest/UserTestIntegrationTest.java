@@ -3,6 +3,7 @@ package com.example.demo.integrationtest;
 
 import com.example.demo.dto.UserDto;
 import com.example.demo.entity.User;
+import com.example.demo.entity.UserRole;
 import com.example.demo.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,8 +44,7 @@ public class UserTestIntegrationTest {
         dto = new UserDto();
         dto.setEmail("ahmed@gmail.com");
         dto.setPassword(passwordEncoder.encode("ww33242"));
-        dto.setRole(User.Role.CUSTOMER);
-
+        dto.setRole(UserRole.CUSTOMER);
 
 
     }

@@ -7,12 +7,11 @@ import java.util.List;
 public interface AccountService {
 
 
-    AccountDto CreatAccount(AccountDto dto);
+    AccountDto CreateAccount(AccountDto dto);
 
     AccountDto getAccountDetailsWithAccountNumber(Long account_id);
 
     List<AccountDto> getAllAccountDetails();
-
 
     AccountDto updateAccount(Long account_id, AccountDto dto);
 

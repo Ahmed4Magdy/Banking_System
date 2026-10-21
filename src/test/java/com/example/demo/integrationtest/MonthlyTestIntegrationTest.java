@@ -3,6 +3,7 @@ package com.example.demo.integrationtest;
 
 import com.example.demo.dto.MonthlyStatementDto;
 import com.example.demo.entity.Account;
+import com.example.demo.entity.AccountType;
 import com.example.demo.entity.Transaction;
 import com.example.demo.entity.User;
 import com.example.demo.repository.AccountRepository;
@@ -71,7 +72,7 @@ public class MonthlyTestIntegrationTest {
         account.setUser(user);
         account.setAccount_number("ACC100");
         account.setAccount_balance(3000.0);
-        account.setType(Account.accountType.SAVINGS);
+        account.setType(AccountType.SAVINGS);
         accountRepository.save(account);
 
         // add some transactions
